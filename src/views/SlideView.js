@@ -6,6 +6,12 @@ define(function (require, exports, module) {
 
   function SlideView() {
     View.apply(this, arguments)
+
+    this.rootModifier = new StateModifier({
+      size: [400, 450]
+    });
+
+    this.mainNode = this.add(this.rootModifier);
   }
 
   SlideView.prototype = Object.create(View.prototype);
