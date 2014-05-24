@@ -3,9 +3,13 @@ define(function (require, exports, module) {
   var Surface = require('famous/core/Surface');
   var Transform = require('famous/core/Transform');
   var StateModifier = require('famous/modifiers/StateModifier');
+  var SlideshowView = require('views/SlideshowView')
 
   function AppView() {
     View.apply(this, arguments)
+
+    var slideshowView = new SlideshowView();
+    this.add(slideshowView);
   }
 
   AppView.prototype = Object.create(View.prototype);
