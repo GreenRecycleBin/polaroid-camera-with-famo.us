@@ -18,6 +18,7 @@ define(function (require, exports, module) {
     this.mainNode = this.add(this.rootModifier);
 
     _createLightbox.call(this);
+    _createSlides.call(this);
   }
 
   SlideshowView.prototype = Object.create(View.prototype);
@@ -32,6 +33,20 @@ define(function (require, exports, module) {
   function _createLightbox() {
     this.lightbox = new Lightbox(this.options.lightboxOptions);
     this.mainNode.add(this.lightbox);
+  }
+
+  function _createSlides() {
+    this.slides = [];
+    this.currentIndex = 0;
+
+    for (var i = 0; i < this.options.data.length; ++i) {
+      var slide = new SlideView({
+        size: this.options.size,
+        photoUrl: this.options.data[i]
+      })
+
+      this.slides.push(slide);
+    }
   }
 
   module.exports = SlideshowView;
