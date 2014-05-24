@@ -12,6 +12,15 @@ define(function (require, exports, module) {
     });
 
     this.mainNode = this.add(this.rootModifier);
+
+    var background = new Surface({
+      properties: {
+        backgroundColor: '#FFFFF5',
+        boxShadow: '0 10px 20px -5px rgba(0, 0, 0, 0.5)'
+      }
+    });
+
+    this.mainNode.add(background);
   }
 
   SlideView.prototype = Object.create(View.prototype);
