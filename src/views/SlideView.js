@@ -13,6 +13,15 @@ define(function (require, exports, module) {
 
     this.mainNode = this.add(this.rootModifier);
 
+    _createBackground.call(this);
+  }
+
+  SlideView.prototype = Object.create(View.prototype);
+  SlideView.prototype.constructor = SlideView;
+
+  SlideView.DEFAULT_OPTIONS = {};
+
+  function _createBackground() {
     var background = new Surface({
       properties: {
         backgroundColor: '#FFFFF5',
@@ -22,11 +31,6 @@ define(function (require, exports, module) {
 
     this.mainNode.add(background);
   }
-
-  SlideView.prototype = Object.create(View.prototype);
-  SlideView.prototype.constructor = SlideView;
-
-  SlideView.DEFAULT_OPTIONS = {};
 
   module.exports = SlideView;
 });
