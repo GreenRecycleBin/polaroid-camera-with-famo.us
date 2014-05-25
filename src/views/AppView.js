@@ -5,6 +5,7 @@ define(function (require, exports, module) {
   var StateModifier = require('famous/modifiers/StateModifier');
   var SlideshowView = require('views/SlideshowView')
   var ImageSurface = require('famous/surfaces/ImageSurface');
+  var ContainerSurface = require('famous/surfaces/ContainerSurface');
 
   function AppView() {
     View.apply(this, arguments)
@@ -43,7 +44,14 @@ define(function (require, exports, module) {
       transform: Transform.translate(0, this.options.slidePosition, 0)
     })
 
-    this.add(slideshowModifier).add(slideshowView);
+    var slideshowContainer = new ContainerSurface({
+      properties: {
+        overflow: 'hidden'
+      }
+    });
+
+    this.add(slideshowModifier).add(slideshowContainer);
+    slideshowContainer.add(slideshowView);
   }
 
   AppView.prototype = Object.create(View.prototype);
