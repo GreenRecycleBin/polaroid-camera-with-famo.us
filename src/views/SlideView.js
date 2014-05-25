@@ -40,6 +40,10 @@ define(function (require, exports, module) {
     });
 
     this.mainNode.add(background);
+
+    background.on('click', function () {
+      this._eventOutput.emit('click');
+    }.bind(this));
   }
 
   function _createFilm() {
@@ -49,7 +53,8 @@ define(function (require, exports, module) {
       size: [this.options.filmSize, this.options.filmSize],
       properties: {
         backgroundColor: '#222',
-        zIndex: 1
+        zIndex: 1,
+        pointerEvents: 'none'
       }
     });
 
@@ -69,7 +74,8 @@ define(function (require, exports, module) {
       size: [photoSize, photoSize],
       content: this.options.photoUrl,
       properties: {
-        zIndex: 2
+        zIndex: 2,
+        pointerEvents: 'none'
       }
     });
 
