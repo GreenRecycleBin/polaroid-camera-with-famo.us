@@ -23,6 +23,10 @@ define(function (require, exports, module) {
 
   SlideshowView.prototype = Object.create(View.prototype);
   SlideshowView.prototype.constructor = SlideshowView;
+  SlideshowView.prototype.showCurrentSlide = function () {
+    var slide = this.slides[this.currentIndex];
+    this.lightbox.show(slide);
+  }
 
   SlideshowView.DEFAULT_OPTIONS = {
     size: [450, 500],
@@ -47,6 +51,8 @@ define(function (require, exports, module) {
 
       this.slides.push(slide);
     }
+
+    this.showCurrentSlide();
   }
 
   module.exports = SlideshowView;
