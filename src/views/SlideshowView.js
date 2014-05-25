@@ -26,7 +26,9 @@ define(function (require, exports, module) {
   SlideshowView.prototype.constructor = SlideshowView;
   SlideshowView.prototype.showCurrentSlide = function () {
     var slide = this.slides[this.currentIndex];
-    this.lightbox.show(slide);
+    this.lightbox.show(slide, function () {
+      slide.fadeIn();
+    }.bind(this));
   }
   SlideshowView.prototype.showNextSlide = function () {
     ++this.currentIndex;
