@@ -27,6 +27,13 @@ define(function (require, exports, module) {
     var slide = this.slides[this.currentIndex];
     this.lightbox.show(slide);
   }
+  SlideshowView.prototype.showNextSlide = function () {
+    ++this.currentIndex;
+
+    if (this.currentIndex == this.slides.length) this.currentIndex = 0;
+
+    this.showCurrentSlide();
+  }
 
   SlideshowView.DEFAULT_OPTIONS = {
     size: [450, 500],
@@ -50,6 +57,8 @@ define(function (require, exports, module) {
       })
 
       this.slides.push(slide);
+
+      slide.on('click', this.showNextSlide.bind(this));
     }
 
     this.showCurrentSlide();
