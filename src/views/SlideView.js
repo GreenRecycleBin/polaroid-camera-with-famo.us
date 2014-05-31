@@ -1,18 +1,18 @@
 define(function (require, exports, module) {
-  var View = require('famous/core/View');
   var Surface = require('famous/core/Surface');
   var Transform = require('famous/core/Transform');
   var StateModifier = require('famous/modifiers/StateModifier');
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var Transitionable = require('famous/transitions/Transitionable');
   var SpringTransition = require('famous/transitions/SpringTransition');
+  var HideableView = require('views/HideableView');
 
   Transitionable.registerMethod('spring', SpringTransition);
 
   var SlideData = require('data/SlideData');
 
   function SlideView() {
-    View.apply(this, arguments)
+    HideableView.apply(this, arguments)
 
     this.rootModifier = new StateModifier({
       size: this.options.size
@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     _createPhoto.call(this);
   }
 
-  SlideView.prototype = Object.create(View.prototype);
+  SlideView.prototype = Object.create(HideableView.prototype);
   SlideView.prototype.constructor = SlideView;
   SlideView.prototype.fadeIn = function () {
     this.photoModifier.setOpacity(1, { duration: 150, curve: 'easeIn' });
@@ -50,7 +50,8 @@ define(function (require, exports, module) {
     filmBorder: 15,
     photoBorder: 3,
     photoUrl: SlideData.defaultImage,
-    angle: -0.5
+    angle: -0.5,
+    visible: true
   };
 
   function _createBackground() {

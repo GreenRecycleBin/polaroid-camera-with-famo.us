@@ -33,10 +33,28 @@ define(function (require, exports, module) {
   }
 
   function _createSlideshow() {
+    if (!this.slideshowContainer) {
+      _createSlideshowContainer.call(this);
+    }
+
     var slideshowView = new SlideshowView({
       size: [this.options.slideWidth, this.options.slideHeight],
       data: this.options.data
     });
+
+    this.slideshowView = slideshowView;
+    this.slideshowContainer.add(slideshowView);
+  }
+
+  function _createSlideshowContainer() {
+    var slideshowContainer = new ContainerSurface({
+      properties: {
+        overflow: 'hidden'
+      }
+    });
+
+    this.slideshowContainer = slideshowContainer;
+    slideshowContainer.context.setPerspective(1000);
 
     var slideshowModifier = new StateModifier({
       origin: [0.5, 0],
@@ -44,19 +62,17 @@ define(function (require, exports, module) {
       transform: Transform.translate(0, this.options.slidePosition, 0)
     })
 
-    var slideshowContainer = new ContainerSurface({
-      properties: {
-        overflow: 'hidden'
-      }
-    });
-
     this.add(slideshowModifier).add(slideshowContainer);
-    slideshowContainer.add(slideshowView);
-    slideshowContainer.context.setPerspective(1000);
   }
 
   AppView.prototype = Object.create(View.prototype);
   AppView.prototype.constructor = AppView;
+  AppView.prototype.reset = function (data) {
+    this.slideshowView.hide();
+
+    this.options.data = data;
+    _createSlideshow.call(this);
+  }
 
   var cameraWidth = 0.5 * window.innerHeight;
   var slideWidth = 0.8 * cameraWidth

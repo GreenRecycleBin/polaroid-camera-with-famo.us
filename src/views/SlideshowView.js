@@ -1,14 +1,14 @@
 define(function (require, exports, module) {
-  var View = require('famous/core/View');
   var Surface = require('famous/core/Surface');
   var Transform = require('famous/core/Transform');
   var StateModifier = require('famous/modifiers/StateModifier');
-  var SlideView = require('views/SlideView');
   var Lightbox = require('famous/views/Lightbox');
   var Easing = require('famous/transitions/Easing')
+  var SlideView = require('views/SlideView');
+  var HideableView = require('views/HideableView');
 
   function SlideshowView() {
-    View.apply(this, arguments)
+    HideableView.apply(this, arguments)
 
     this.rootModifier = new StateModifier({
       size: this.options.size,
@@ -22,7 +22,7 @@ define(function (require, exports, module) {
     _createSlides.call(this);
   }
 
-  SlideshowView.prototype = Object.create(View.prototype);
+  SlideshowView.prototype = Object.create(HideableView.prototype);
   SlideshowView.prototype.constructor = SlideshowView;
   SlideshowView.prototype.showCurrentSlide = function () {
     this.ready = false;
@@ -42,6 +42,13 @@ define(function (require, exports, module) {
 
     this.showCurrentSlide();
   }
+  SlideshowView.prototype.hide = function () {
+    HideableView.prototype.hide.call(this);
+
+    this.slides.forEach(function (slide, index, slides) {
+      slide.hide();
+    });
+  }
 
   SlideshowView.DEFAULT_OPTIONS = {
     size: [450, 500],
@@ -56,7 +63,8 @@ define(function (require, exports, module) {
       outTransform: Transform.thenMove(Transform.rotateZ(0.7), [0, window.innerHeight, -1000]),
       inTransition: { duration: 650, curve: 'easeOut' },
       outTransition: { duration: 500, curve: Easing.inCubic }
-    }
+    },
+    visible: true
   };
 
   function _createLightbox() {
