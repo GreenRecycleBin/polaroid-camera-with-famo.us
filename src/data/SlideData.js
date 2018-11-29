@@ -13,12 +13,17 @@ define(function(require, exports, module) {
 
     SlideData.parse = function(data) {
         var urls = [];
-        data = JSON.parse(data);
-        var entries = data.feed.entry;
-        for (var i = 0; i < entries.length; i++) {
+
+        try {
+          var data = JSON.parse(data);
+          var entries = data.feed.entry;
+
+          for (var i = 0; i < entries.length; i++) {
             var media = entries[i].media$group;
             urls.push(media.media$content[0].url);
-        }
+          }
+        } catch (e) {}
+
         return urls;
     };
 
